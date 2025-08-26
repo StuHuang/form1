@@ -5,12 +5,7 @@ VisualStudioVersion = 15.0.36324.19
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestForm", "TestForm\TestForm.csproj", "{A04159E4-C734-4574-89E3-5F2DDFA4382C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{DFE4E661-09F1-43DF-8F51-F055007E0D5F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{4FE0F0F7-A21E-4B0F-BA03-F40202DED89A}"
-	ProjectSection(SolutionItems) = preProject
-		D:\test\.github\workflows\ci-cd.yml = D:\test\.github\workflows\ci-cd.yml
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".gethub", ".gethub", "{9CC8F95E-733E-4D12-BDD6-C5B65B265E58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,9 +20,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4FE0F0F7-A21E-4B0F-BA03-F40202DED89A} = {DFE4E661-09F1-43DF-8F51-F055007E0D5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABC63002-586C-4445-815F-5D9B81137EC3}
