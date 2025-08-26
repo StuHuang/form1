@@ -38,7 +38,8 @@ jobs:
     - name: NuGet restore
       run: |
         nuget restore $env:SOLUTION_NAME
-        name: Discover solution configurations
+        
+    - name: Discover solution configurations
       id: config-discovery
       run: |
         # 查找解决方案文件
@@ -77,7 +78,7 @@ jobs:
         echo "::set-output name=platform::$platformName"
       shell: pwsh
     # 步骤 4: 构建解决方案
-    name: Build solution
+    - name: Build solution
       run: |
         $solutionFile = Get-ChildItem -Path . -Recurse -Filter "*.sln" | Select-Object -First 1
         msbuild $solutionFile.Name /p:Configuration=${{ steps.config-discovery.outputs.config }} /p:Platform="${{ steps.config-discovery.outputs.platform }}" /verbosity:minimal
