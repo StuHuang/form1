@@ -41,18 +41,18 @@ jobs:
 
     # 步骤 4: 构建解决方案
     - name: Build solution
-  run: |
+    run: |
 
-    # 组合 1: Release|Any CPU (注意空格)
-    msbuild TestForm.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal || 
-    # 组合 2: Release|x86
-    msbuild TestForm.sln /p:Configuration=Release /p:Platform=x86 /verbosity:minimal || 
-    # 组合 3: Debug|Any CPU
-    msbuild TestForm.sln /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal || 
-    # 组合 4: Debug|x86
-    msbuild TestForm.sln /p:Configuration=Debug /p:Platform=x86 /verbosity:minimal || 
-    # 如果所有组合都失败，显示错误
-    echo "所有配置尝试都失败，请检查解决方案中的有效配置" && exit 1
+      # 组合 1: Release|Any CPU (注意空格)
+      msbuild TestForm.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal || 
+      # 组合 2: Release|x86
+      msbuild TestForm.sln /p:Configuration=Release /p:Platform=x86 /verbosity:minimal || 
+      # 组合 3: Debug|Any CPU
+      msbuild TestForm.sln /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal || 
+      # 组合 4: Debug|x86
+      msbuild TestForm.sln /p:Configuration=Debug /p:Platform=x86 /verbosity:minimal || 
+      # 如果所有组合都失败，显示错误
+      echo "所有配置尝试都失败，请检查解决方案中的有效配置" && exit 1
       shell: cmd
       continue-on-error: true  # 即使测试失败也继续后续步骤
 
