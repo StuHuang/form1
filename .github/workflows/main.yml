@@ -38,23 +38,50 @@ jobs:
     - name: NuGet restore
       run: |
         nuget restore $env:SOLUTION_NAME
-
+        name: Discover solution configurations
+      id: config-discovery
+      run: |
+        # 查找解决方案文件
+        $solutionFile = Get-ChildItem -Path . -Recurse -Filter "*.sln" | Select-Object -First 1
+        if (-not $solutionFile) {
+          Write-Error "未找到解决方案文件"
+          exit 1
+        }
+        
+        # 提取解决方案中的配置信息
+        $solutionContent = Get-Content -Path $solutionFile.FullName -Raw
+        $configMatches = [regex]::Matches($solutionContent, '([^|]+)\|([^=]+)=')
+        
+        # 查找 Release 配置
+        $releaseConfigs = $configMatches | Where-Object { $_.Groups[1].Value -eq "Release" }
+        
+        if ($releaseConfigs.Count -eq 0) {
+          Write-Host "未找到 Release 配置，使用第一个可用配置"
+          $firstConfig = $configMatches[0]
+          $configName = $firstConfig.Groups[1].Value
+          $platformName = $firstConfig.Groups[2].Value
+        } else {
+          # 优先使用 Any CPU 平台，如果没有则使用第一个找到的平台
+          $anyCpuPlatform = $releaseConfigs | Where-Object { $_.Groups[2].Value -eq "Any CPU" }
+          if ($anyCpuPlatform) {
+            $configName = "Release"
+            $platformName = "Any CPU"
+          } else {
+            $configName = "Release"
+            $platformName = $releaseConfigs[0].Groups[2].Value
+          }
+        }
+        
+        Write-Host "使用配置: $configName|$platformName"
+        echo "::set-output name=config::$configName"
+        echo "::set-output name=platform::$platformName"
+      shell: pwsh
     # 步骤 4: 构建解决方案
-    - name: Build solution
-    run: |
-
-      # 组合 1: Release|Any CPU (注意空格)
-      msbuild TestForm.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal || 
-      # 组合 2: Release|x86
-      msbuild TestForm.sln /p:Configuration=Release /p:Platform=x86 /verbosity:minimal || 
-      # 组合 3: Debug|Any CPU
-      msbuild TestForm.sln /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal || 
-      # 组合 4: Debug|x86
-      msbuild TestForm.sln /p:Configuration=Debug /p:Platform=x86 /verbosity:minimal || 
-      # 如果所有组合都失败，显示错误
-      echo "所有配置尝试都失败，请检查解决方案中的有效配置" && exit 1
-      shell: cmd
-      continue-on-error: true  # 即使测试失败也继续后续步骤
+    name: Build solution
+      run: |
+        $solutionFile = Get-ChildItem -Path . -Recurse -Filter "*.sln" | Select-Object -First 1
+        msbuild $solutionFile.Name /p:Configuration=${{ steps.config-discovery.outputs.config }} /p:Platform="${{ steps.config-discovery.outputs.platform }}" /verbosity:minimal
+      shell: pwsh
 
     # 步骤 5: 运行测试（如果有）
     - name: Run tests
