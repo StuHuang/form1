@@ -94,7 +94,7 @@ jobs:
           "/p:Configuration=$env:BUILD_CONFIGURATION",
           "/p:Platform=$env:BUILD_PLATFORM",
           "/t:Rebuild",
-          "/p:ReferencePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5",
+          "/p:ReferencePath="https://chocolatey.org/install.ps1",
           "/verbosity:minimal"
         )
         & "MSBuild" $msbuildArgs
