@@ -81,16 +81,17 @@ jobs:
     # 步骤 4: 构建解决方案
     - name: Build solution
       run: |
-       # 使用 MSBuild 构建 .NET Framework 解决方案
-        msbuild $env:SOLUTION_NAME `
-        /p:Configuration=$env:BUILD_CONFIGURATION `
-        /p:Platform=$env:BUILD_PLATFORM `
-        /p:TargetFrameworkVersion=v4.5 `  # 指定目标框架版本
-        /t:Rebuild `
-        /verbosity:minimal `
-        /p:WarningLevel=0 `  # 控制警告级别
-        /p:OutputPath=bin\$env:BUILD_CONFIGURATION
-
+        # 使用参数数组方式调用 MSBuild
+        $msbuildArgs = @(
+          "$env:SOLUTION_NAME",
+          "/p:Configuration=$env:BUILD_CONFIGURATION",
+          "/p:Platform=$env:BUILD_PLATFORM",
+          "/t:Rebuild",
+          "/verbosity:minimal"
+        )
+        & "MSBuild" $msbuildArgs
+      shell: pwsh
+     
     # 步骤 5: 运行测试（如果有）
     - name: Run tests
       run: |
