@@ -96,8 +96,8 @@ jobs:
           "/p:Configuration=$env:BUILD_CONFIGURATION",
           "/p:Platform=$env:BUILD_PLATFORM",
           "/t:Rebuild",
-          "/p:ReferencePath="https://chocolatey.org/install.ps1",
-          "/verbosity:minimal",
+          "/p:ReferencePath=`"https://chocolatey.org/install.ps1`","
+          "/verbosity:minimal"
         )
         & MSBuild $msbuildArgs
       shell: pwsh
