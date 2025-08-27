@@ -80,7 +80,7 @@ jobs:
     # 步骤 4: 构建解决方案
     - name: Build solution
       run: |
-        $solutionFile = Get-ChildItem -Path . -Recurse -Filter "TestForm\*.sln" | Select-Object -First 1
+        $solutionFile = Get-ChildItem -Path . -Recurse -Filter "*.sln" | Select-Object -First 1
         msbuild $solutionFile.Name /p:Configuration=${{ steps.config-discovery.outputs.config }} /p:Platform="${{ steps.config-discovery.outputs.platform }}" /verbosity:minimal
       shell: pwsh
 
