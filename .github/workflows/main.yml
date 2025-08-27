@@ -43,7 +43,7 @@ jobs:
       id: config-discovery
       run: |
         # 查找解决方案文件
-        $solutionFile = Get-ChildItem -Path . -Recurse -Filter "*.sln" | Select-Object -First 1
+        $solutionFile = Get-ChildItem -Path . -Recurse -Filter "TestForm\*.sln" | Select-Object -First 1
         if (-not $solutionFile) {
           Write-Error "未找到解决方案文件"
           exit 1
