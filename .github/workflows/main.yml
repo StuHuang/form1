@@ -37,7 +37,7 @@ jobs:
     # 步骤 3: 还原 NuGet 包
     - name: NuGet restore
       run: |
-        nuget restore $env:SOLUTION_NAME
+        nuget restore $env:'TestForm\TestForm.sln'
         
     - name: Discover solution configurations
       id: config-discovery
