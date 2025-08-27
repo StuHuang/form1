@@ -77,12 +77,6 @@ jobs:
         echo "::set-output name=config::$configName"
         echo "::set-output name=platform::$platformName"
       shell: pwsh
-
-    - name: Build solution
-      run: |
-        pwd
-        ls-la
-        shell:pwsh
         
     # 步骤 4: 构建解决方案
     - name: Build solution
