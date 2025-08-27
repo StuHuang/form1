@@ -99,7 +99,7 @@ jobs:
           "/p:ReferencePath="https://chocolatey.org/install.ps1",
           "/verbosity:minimal"
         )
-        & "MSBuild" @msbuildArgs
+        & "MSBuild" "$msbuildArgs"
       shell: pwsh
      
     # 步骤 5: 运行测试（如果有）
