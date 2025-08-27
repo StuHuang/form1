@@ -94,6 +94,7 @@ jobs:
           "/p:Configuration=$env:BUILD_CONFIGURATION",
           "/p:Platform=$env:BUILD_PLATFORM",
           "/t:Rebuild",
+          "/p:ReferencePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5",
           "/verbosity:minimal"
         )
         & "MSBuild" $msbuildArgs
