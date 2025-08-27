@@ -78,14 +78,37 @@ jobs:
         echo "::set-output name=platform::$platformName"
       shell: pwsh
       
-    - name: Setup .NET Framework
-      uses: actions/setup-dotnet@v4
-      with:
-        # 安装 .NET Framework 4.5.2 开发包（兼容 4.5）
-        dotnet-version: '4.5.2'
+    name: .NET Framework Build
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  DOTNET_FRAMEWORK_URL: "https://download.microsoft.com/download/4/3/3/4330912D-2396-4FA1-836C-481D5A6C7CAC/NDP452-KB2901907-x86-x64-AllOS-ENU.exe"
+  DOTNET_FRAMEWORK_FILENAME: "NDP452-KB2901907-x86-x64-AllOS-ENU.exe"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download .NET Framework 4.5.2
+      run: |
+        if (-not (Test-Path "$env:RUNNER_TEMP/$env:DOTNET_FRAMEWORK_FILENAME")) {
+          Invoke-WebRequest -Uri $env:DOTNET_FRAMEWORK_URL -OutFile "$env:RUNNER_TEMP/$env:DOTNET_FRAMEWORK_FILENAME"
+        }
+        
+    - name: Install .NET Framework 4.5.2
+      run: |
+        Start-Process -FilePath "$env:RUNNER_TEMP/$env:DOTNET_FRAMEWORK_FILENAME" -ArgumentList "/quiet /norestart" -Wait
         
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.1
+      
         
     # 步骤 4: 构建解决方案
     - name: Build solution
