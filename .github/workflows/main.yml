@@ -87,7 +87,7 @@ jobs:
       run: choco install dotnet3.5 -y
 
     - name: Restore NuGet packages
-      run: nuget restore form1/TestForm/TestForm.sln
+      run: nuget restore TestForm/TestForm.sln
         
     # 步骤 4: 构建解决方案
     - name: Build solution
