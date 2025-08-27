@@ -80,10 +80,12 @@ jobs:
       
     - name: Install .NET Framework 4.5 SDK
       run: |
-        # 使用 Chocolatey 安装 .NET Framework 4.5 SDK
+       # 安装 Chocolatey（如果未安装）
         Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
-        iex ((New-Object System.Net.WebClient).DownloadString('https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/thank-you/net451-developer-pack-offline-installer'))
-        choco install dotnet4.5-sdk -y  # 确保安装的是 SDK 而非运行时
+        iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+        # 安装 .NET Framework 4.5 SDK
+        choco install dotnet4.5 -y
         
     # 步骤 4: 构建解决方案
     - name: Build solution
