@@ -10,7 +10,7 @@ on:
 env:
   SOLUTION_NAME: 'TestForm\TestForm.sln'  # 替换为你的解决方案文件名
   BUILD_CONFIGURATION: 'Release'
-  BUILD_PLATFORM: 'AnyCPU'
+  BUILD_PLATFORM: 'Any CPU'
 
 jobs:
   build:
