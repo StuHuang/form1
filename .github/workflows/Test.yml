@@ -1,0 +1,42 @@
+name: .NET Framework 4.5 WinForms CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+      with:
+        msbuild-architecture: x86
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+
+    - name: Restore NuGet packages
+      run: nuget restore YourSolution.sln
+
+    - name: Build solution
+      run: msbuild TestFrom.sln /p:Configuration=Release /p:Platform="Any CPU" /p:TargetFrameworkVersion=v4.5
+
+    - name: Run tests (if any)
+      run: |
+        # 如果有测试项目，添加测试命令
+        # 例如：vstest.console.exe TestFrom\bin\Release\*.Tests.dll
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: WinForms-App
+        path: |
+          TestFrom\bin\Release\
+          !**\*.pdb
