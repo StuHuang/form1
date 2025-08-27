@@ -8,7 +8,7 @@ on:
   workflow_dispatch:  # 允许手动触发工作流
 
 env:
-  SOLUTION_NAME: 'TestForm\TestForm.sln'  # 替换为你的解决方案文件名
+  SOLUTION_NAME: 'TestForm.sln'  # 替换为你的解决方案文件名
   BUILD_CONFIGURATION: 'Release'
   BUILD_PLATFORM: 'AnyCPU'
 
