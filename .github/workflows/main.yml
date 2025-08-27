@@ -82,6 +82,8 @@ jobs:
       run: |
         pwd
         ls-la
+        shell:pwsh
+        
     # 步骤 4: 构建解决方案
     - name: Build solution
       run: |
